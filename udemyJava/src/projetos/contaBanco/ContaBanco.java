@@ -1,5 +1,4 @@
 package projetos.contaBanco;
-
 import java.util.Scanner;
 
 public class ContaBanco {
@@ -12,20 +11,19 @@ public class ContaBanco {
     Scanner sc = new Scanner(System.in);
 
     public ContaBanco(String tipo){
-        this.tipo = tipo;
-        this.dono = dono;
+        this.setTipo(tipo);
+        this.setDono(dono);
 
-        this.saldo = 0;
-        this.status = false;
+        this.setSaldo(0);
+        this.setStatus(true);
     }
 
     public void abrirConta() {
-        this.status = true;
-        this.saldo = 0;
+        this.setStatus(true);
         if (tipo == "CC") {
-            this.saldo = 50.0;
+            this.setSaldo(50.00);
         } else if (tipo == "CP") {
-            this.saldo = 150.00;
+            this.setSaldo(150.00);
         } else {
             System.out.println("Tipo invalido");
         }
@@ -33,11 +31,12 @@ public class ContaBanco {
     }
 
     public void fecharConta(){
-            this.status = false;
             if(saldo > 0){
                 System.out.println("Para fechar a conta e necessario sacar o SALDO: R$" + saldo);
             } else if (saldo < 0) {
                 System.out.println("Para fechar a sua conta e necessario depositar o valor da FATURA: R$" + saldo);
+            } else {
+                this.setStatus(false);
             }
         }
 
@@ -46,7 +45,7 @@ public class ContaBanco {
                 System.out.print("Digite o valor do deposito: R$");
                 double valor = sc.nextDouble();
                 if (valor > 0){
-                    this.saldo += valor;
+                    this.setSaldo(this.getSaldo() + valor);
                     System.out.println("Deposito realizado com sucesso!");
                     System.out.println("Saldo atual: R$" + saldo);
                 } else{
@@ -62,7 +61,7 @@ public class ContaBanco {
             System.out.print("Digite o valor do saque: R$");
             double saque = sc.nextDouble();
             if (saque <= saldo && saque > 0) {
-                this.saldo -= saque;
+                this.setSaldo(this.getSaldo() - saque);
                 System.out.println("Saque realizado com sucesso!");
                 System.out.printf("Saldo atual: R$%.2f%n", saldo);
             } else {
@@ -76,9 +75,9 @@ public class ContaBanco {
     public void pagarMensal(){
         if(status == true) {
             if (tipo == "CC") {
-                this.saldo -= 12.00;
+                this.setSaldo(this.getSaldo() - 12.00);
             } else if (tipo == "CP") {
-                this.saldo -= 20.00;
+                this.setSaldo(this.getSaldo() - 20.00);
             }
             System.out.println("Mensalidade descontada do seu saldo!");
         } else {
